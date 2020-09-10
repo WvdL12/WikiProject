@@ -43,8 +43,10 @@ def randompage(request):
     nr_entries = len(entries)
     rand = random.randint(0, nr_entries - 1)
     entry = entries[rand]
-    body_md = util.get_entry(entry)
-    body = markdown2.markdown(body_md)
-    return render(request, "encyclopedia/entry.html", {
-        "entry": entry, "body": body}) 
+    #body_md = util.get_entry(entry)
+    #body = markdown2.markdown(body_md)
+    #return render(request, "encyclopedia/entry.html", {
+     #   "entry": entry, "body": body})
+    
+    return HttpResponseRedirect(reverse('entry', kwargs={ 'entry': entry}))
 

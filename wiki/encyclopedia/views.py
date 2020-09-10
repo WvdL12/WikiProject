@@ -3,13 +3,9 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 import markdown2
 import random
-from django import forms
+
 
 from . import util
-
-class NewEntryForm(forms.Form):
-    title = forms.CharField(label="Title")
-    body = forms.CharField(label="Body")
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -40,8 +36,7 @@ def newpage(request):
             body = markdown2.markdown(content)
             return render(request, "encyclopedia/entry.html", {
                 "entry": title, "body": body})
-    return render(request, "encyclopedia/newpage.html", {
-        "form": NewEntryForm()})
+    return render(request, "encyclopedia/newpage.html")
     
 def randompage(request):
     entries = util.list_entries()

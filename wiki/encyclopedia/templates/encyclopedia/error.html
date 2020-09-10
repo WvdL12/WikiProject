@@ -1,0 +1,15 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block body %}
+	{% if code is 0 %}
+		<h1> Page "{{ entry }}" does not exist. </h1>
+		<a href="{% url 'newpage' %}">Create {{ entry }}</a>
+	{% elif code is 1 %}
+		Page <a href="{% url 'index' %}wiki/{{entry}}">{{ entry }}</a> already exists.
+	{% endif %}
+	
+{% endblock %}

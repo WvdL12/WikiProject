@@ -7,3 +7,7 @@
 {% block body %}
 	{{ body |safe }}
 {% endblock %}
+
+{% block nav %}
+	<a href="{% url 'index' %}edit/{{entry}}">Edit {{ entry }}</a>
+{% endblock %}

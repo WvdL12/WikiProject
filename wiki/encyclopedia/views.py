@@ -33,20 +33,23 @@ def newpage(request):
                 "code": 1, "entry": title})
         else:
             util.save_entry(title, content)
-            body = markdown2.markdown(content)
-            return render(request, "encyclopedia/entry.html", {
-                "entry": title, "body": body})
+            return HttpResponseRedirect(reverse('entry', kwargs={ 'entry': title}))
     return render(request, "encyclopedia/newpage.html")
+    
+def edit(request, title):
+    if request.method == "POST":
+        body = request.POST["body"]
+        util.save_entry(title, body)
+        return HttpResponseRedirect(reverse('entry', kwargs={ 'entry': title}))
+    else:
+        body = util.get_entry(title)
+        return render(request, "encyclopedia/edit.html", {
+            "title":title, "body":body})
     
 def randompage(request):
     entries = util.list_entries()
     nr_entries = len(entries)
     rand = random.randint(0, nr_entries - 1)
     entry = entries[rand]
-    #body_md = util.get_entry(entry)
-    #body = markdown2.markdown(body_md)
-    #return render(request, "encyclopedia/entry.html", {
-     #   "entry": entry, "body": body})
-    
     return HttpResponseRedirect(reverse('entry', kwargs={ 'entry': entry}))
 
